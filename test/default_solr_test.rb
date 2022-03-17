@@ -8,7 +8,7 @@ module CDMDEXER
 
     it 'establishes a connection' do
       client.expect :connect, connection, [{ url: 'http://localhost:8983/solr/blacklight-core' }]
-      DefaultSolr.new('http://solr:8983/solr/some-core-here', client).connection
+      DefaultSolr.new('http://localhost:8983/solr/blacklight-core', client).connection
       client.verify
     end
 
@@ -16,7 +16,7 @@ module CDMDEXER
       client.expect :connect, connection, [{ url: 'http://localhost:8983/solr/blacklight-core' }]
       connection.expect :add, 'blah', [[{ id: '3sfsdf' }]]
       connection.expect :commit, nil
-      DefaultSolr.new('http://solr:8983/solr/some-core-here', client).add([{ id: '3sfsdf' }])
+      DefaultSolr.new('http://localhost:8983/solr/blacklight-core', client).add([{ id: '3sfsdf' }])
       client.verify
     end
   end
