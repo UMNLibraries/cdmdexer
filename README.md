@@ -20,6 +20,10 @@ Or install it yourself as:
 
     $ gem install cdmdexer
 
+Run the cdmdexer install generator. This step will add a `config/settings.yml` file to your local application, containing default Solr field mappings and formatters to your project:
+
+    $ bundle exec rails g cdmdexer:install
+
 Add the CDMDEXER rake task to your project Rakefile:
 
 ```ruby
@@ -30,9 +34,14 @@ require 'cdmdexer/rake_task'
 
 In order to make use of the GeoNames service, you must purchase a [GeoNames Premium Webservices Account](http://www.geonames.org/commercial-webservices.html). If you do not have a `geonam` field in your CONTENTdm schema, you may ignore this instruction. Add your credentials to your shell environment once you have secured a GeoNames user:
 
+
 ```
-# e.g. within your .bash_profile or .zprofile file
-export export GEONAMES_USER="yourusernamehere"
+cp .env.example .env
+nano .env
+
+# Add these vars to the .env file
+GEONAMES_USER=foo
+GEONAMES_TOKEN=bar
 ```
 
 ## Usage
