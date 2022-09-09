@@ -24,18 +24,18 @@ module CDMDEXER
 
     describe 'when a field transformation results in an error' do
       it 'returns the record id along with the error message' do
-        class BadFormatterWut
+        class BadFieldTransformerFormatter
           def self.format(value)
-            raise 'wuuuuut'
+            raise 'mock error'
           end
         end
 
-        config = { dest_path: 'title', origin_path: 'title', formatters: [BadFormatterWut] }
+        config = { dest_path: 'title', origin_path: 'title', formatters: [BadFieldTransformerFormatter] }
         field_mapping = FieldMapping.new(config: config)
         record = {'title' => 'foo' }
         transformer = FieldTransformer.new(field_mapping: field_mapping, record: record)
         err = _{ transformer.reduce }.must_raise RuntimeError
-        _(err.message).must_equal "Mapping: {:dest_path=>\"title\", :origin_path=>\"title\", :formatters=>[CDMDEXER::BadFormatterWut]} Error:wuuuuut"
+        _(err.message).must_equal "Mapping: {:dest_path=>\"title\", :origin_path=>\"title\", :formatters=>[CDMDEXER::BadFieldTransformerFormatter]} Error:mock error"
       end
     end
   end
