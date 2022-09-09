@@ -65,7 +65,7 @@ module CDMDEXER
         'is_recursive' => false,
         'batch_size' => 2,
         'solr_config' => { blah: 'blah' }
-      }
+      }.to_json
       ETLWorker.perform_async(config)
     end
   end

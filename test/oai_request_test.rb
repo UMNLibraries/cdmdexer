@@ -130,32 +130,41 @@ module CDMDEXER
       it 'returns an array of one set' do
         client.expect :get_response, client_response, [URI('http://example.com?verb=ListSets')]
         client_response.expect :body, list_single_sets_response
-        request = OaiRequest.new(endpoint_url: 'http://example.com', client: client)
-        assert_respond_to request, :sets
-        _(request.sets).must_equal([{"setSpec"=>"coll123", "setName"=>"blah", "setDescription"=>{"dc"=>{"description"=>"blah"}}}])
-        client.verify
-        client_response.verify
+
+        capture_io do
+          request = OaiRequest.new(endpoint_url: 'http://example.com', client: client)
+          assert_respond_to request, :sets
+          _(request.sets).must_equal([{"setSpec"=>"coll123", "setName"=>"blah", "setDescription"=>{"dc"=>{"description"=>"blah"}}}])
+          client.verify
+          client_response.verify
+        end
       end
     end
 
     it 'requests and parses sets' do
       client.expect :get_response, client_response, [URI('http://example.com?verb=ListSets')]
       client_response.expect :body, list_sets_response
-      request = OaiRequest.new(endpoint_url: 'http://example.com', client: client)
-      assert_respond_to request, :sets
-      _(request.sets).must_equal([{"setSpec"=>"coll123", "setName"=>"blah", "setDescription"=>{"dc"=>{"description"=>"blah"}}}, {"setSpec"=>"coll1234", "setName"=>"blah 1", "setDescription"=>{"dc"=>{"description"=>"blah 1"}}}])
-      client.verify
-      client_response.verify
+
+      capture_io do
+        request = OaiRequest.new(endpoint_url: 'http://example.com', client: client)
+        assert_respond_to request, :sets
+        _(request.sets).must_equal([{"setSpec"=>"coll123", "setName"=>"blah", "setDescription"=>{"dc"=>{"description"=>"blah"}}}, {"setSpec"=>"coll1234", "setName"=>"blah 1", "setDescription"=>{"dc"=>{"description"=>"blah 1"}}}])
+        client.verify
+        client_response.verify
+      end
     end
 
     it 'provides a keyed set lookup' do
       client.expect :get_response, client_response, [URI('http://example.com?verb=ListSets')]
       client_response.expect :body, list_sets_response
-      request = OaiRequest.new(endpoint_url: 'http://example.com', client: client)
-      assert_respond_to request, :sets
-      _(request.set_lookup).must_equal({"coll123"=>{:name=>"blah", :description=>"blah"}, "coll1234"=>{:name=>"blah 1", :description=>"blah 1"}})
-      client.verify
-      client_response.verify
+
+      capture_io do
+        request = OaiRequest.new(endpoint_url: 'http://example.com', client: client)
+        assert_respond_to request, :sets
+        _(request.set_lookup).must_equal({"coll123"=>{:name=>"blah", :description=>"blah"}, "coll1234"=>{:name=>"blah 1", :description=>"blah 1"}})
+        client.verify
+        client_response.verify
+      end
     end
 
     describe 'when a resumption token is present' do
@@ -164,10 +173,13 @@ module CDMDEXER
                       client_response,
                       [URI('http://example.com?verb=ListIdentifiers&metadataPrefix=oai_dc&set=swede')]
         client_response.expect :body, resumption_token_response
-        request = OaiRequest.new set_spec: 'swede',
-                                endpoint_url: 'http://example.com',
-                                client: client
-        _(request.next_resumption_token).must_equal("foo:123")
+
+        capture_io do
+          request = OaiRequest.new set_spec: 'swede',
+                                  endpoint_url: 'http://example.com',
+                                  client: client
+          _(request.next_resumption_token).must_equal("foo:123")
+        end
       end
     end
 
@@ -177,10 +189,13 @@ module CDMDEXER
                       client_response,
                       [URI('http://example.com?verb=ListIdentifiers&metadataPrefix=oai_dc&set=swede')]
         client_response.expect :body, header_response
-        request = OaiRequest.new set_spec: 'swede',
-                                endpoint_url: 'http://example.com',
+
+        capture_io do
+          request = OaiRequest.new set_spec: 'swede',
+                                  endpoint_url: 'http://example.com',
                                 client: client
-        _(request.next_resumption_token).must_be_nil
+          _(request.next_resumption_token).must_be_nil
+        end
       end
     end
 
@@ -189,10 +204,13 @@ module CDMDEXER
                     client_response,
                     [URI('http://example.com?verb=ListIdentifiers&metadataPrefix=oai_dc&set=swede')]
       client_response.expect :body, header_response
-      request = OaiRequest.new set_spec: 'swede',
-                               endpoint_url: 'http://example.com',
-                               client: client
-      _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", :id=>"foocollection1:123"}])
+
+      capture_io do
+        request = OaiRequest.new set_spec: 'swede',
+                                 endpoint_url: 'http://example.com',
+                                 client: client
+        _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", :id=>"foocollection1:123"}])
+      end
     end
 
     describe 'when no resumption token is present' do
@@ -201,10 +219,13 @@ module CDMDEXER
                       client_response,
                       [URI('http://example.com?verb=ListIdentifiers&metadataPrefix=oai_dc')]
         client_response.expect :body, header_response
-        request = OaiRequest.new endpoint_url: 'http://example.com',
-                                 client: client
-        _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", :id=>"foocollection1:123"}])
-        client.verify
+
+        capture_io do
+          request = OaiRequest.new endpoint_url: 'http://example.com',
+                                  client: client
+          _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", :id=>"foocollection1:123"}])
+          client.verify
+        end
       end
     end
 
@@ -214,11 +235,14 @@ module CDMDEXER
                       client_response,
                       [URI('http://example.com?verb=ListIdentifiers&resumptionToken=oai:123')]
         client_response.expect :body, header_response
-        request = OaiRequest.new endpoint_url: 'http://example.com',
-                                 resumption_token: 'oai:123',
-                                 client: client
-        _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", :id=>"foocollection1:123"}])
-        client.verify
+
+        capture_io do
+          request = OaiRequest.new endpoint_url: 'http://example.com',
+                                  resumption_token: 'oai:123',
+                                  client: client
+          _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", :id=>"foocollection1:123"}])
+          client.verify
+        end
       end
     end
 
@@ -227,10 +251,13 @@ module CDMDEXER
                     client_response,
                     [URI('http://example.com?verb=ListIdentifiers&metadataPrefix=oai_dc')]
       client_response.expect :body, header_response_with_status
-      request = OaiRequest.new endpoint_url: 'http://example.com',
-                               client: client
-      _(request.deletable_ids).must_equal(["foo:1234"])
-      _(request.updatables).must_equal([{"identifier"=>"blerg.com:foo/123", :id=>"foo:123"}, {"identifier"=>"blerg.com:foo/1235", :id=>"foo:1235"}])
+
+      capture_io do
+        request = OaiRequest.new endpoint_url: 'http://example.com',
+                                client: client
+        _(request.deletable_ids).must_equal(["foo:1234"])
+        _(request.updatables).must_equal([{"identifier"=>"blerg.com:foo/123", :id=>"foo:123"}, {"identifier"=>"blerg.com:foo/1235", :id=>"foo:1235"}])
+      end
     end
 
     it 'can harvest only records after a provided date' do
@@ -238,12 +265,15 @@ module CDMDEXER
                     client_response,
                     [URI('http://example.com?verb=ListIdentifiers&metadataPrefix=oai_dc')]
       client_response.expect :body, header_response_with_mixed_dates
-      request = OaiRequest.new endpoint_url: 'http://example.com',
-                               client: client,
-                               after_date: 1.week.ago
 
-      _(request.deletable_ids).must_equal(["foo:1239-today"])
-      _(request.updatables).must_equal([{"datestamp"=> today, "identifier"=>"blerg.com:foo/122235-today", :id=>"foo:122235-today"}])
+      capture_io do
+        request = OaiRequest.new endpoint_url: 'http://example.com',
+                                client: client,
+                                after_date: 1.week.ago
+
+        _(request.deletable_ids).must_equal(["foo:1239-today"])
+        _(request.updatables).must_equal([{"datestamp"=> today, "identifier"=>"blerg.com:foo/122235-today", :id=>"foo:122235-today"}])
+      end
     end
 
     describe 'when given and empty response' do
@@ -252,15 +282,18 @@ module CDMDEXER
         client.expect :get_response, client_response, [URI('http://example.com?verb=ListIdentifiers&metadataPrefix=oai_dc')]
         client_response.expect :body, empty_response
         client_response.expect :body, empty_response
-        request = OaiRequest.new(endpoint_url: 'http://example.com', client: client)
-        _(request.sets).must_equal []
-        _(request.records).must_equal []
-        _(request.set_lookup).must_equal({})
-        assert_nil(request.next_resumption_token)
-        _(request.deletable_ids).must_equal []
-        _(request.updatables).must_equal []
-        client.verify
-        client_response.verify
+
+        capture_io do
+          request = OaiRequest.new(endpoint_url: 'http://example.com', client: client)
+          _(request.sets).must_equal []
+          _(request.records).must_equal []
+          _(request.set_lookup).must_equal({})
+          assert_nil(request.next_resumption_token)
+          _(request.deletable_ids).must_equal []
+          _(request.updatables).must_equal []
+          client.verify
+          client_response.verify
+        end
       end
     end
   end

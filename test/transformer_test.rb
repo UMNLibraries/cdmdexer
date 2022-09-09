@@ -17,8 +17,13 @@ module CDMDEXER
     }
 
     class FakeCache
+      class Fetcher
+        def self.fetch(key, default)
+          {'cdmdexer_sets' => {}}
+        end
+      end
       def self.cache
-        {'cdmdexer_sets' => {}}
+        Fetcher
       end
     end
 
@@ -127,13 +132,13 @@ module CDMDEXER
           'has_children' => true
         }]
 
-        class BadFormatterWut
+        class BadTransformerFormatter
           def self.format(value)
-            raise 'wuuuuut ConnectionError'
+            raise 'mock ConnectionError'
           end
         end
 
-        mappings = [{dest_path: 'has_children', origin_path: 'has_children', formatters: [BadFormatterWut]}]
+        mappings = [{dest_path: 'has_children', origin_path: 'has_children', formatters: [BadTransformerFormatter]}]
 
         oai_endpoint = 'example.com'
         oai_request_klass = Minitest::Mock.new
@@ -141,11 +146,12 @@ module CDMDEXER
         oai_request_klass.expect :new, oai_request_obj, [base_uri: oai_endpoint]
         oai_request_obj.expect :sets_lookup, { 'foo' => { bar: 'ba' } }, []
 
-        transformation =  Transformer.new(cdm_records: records, field_mappings: mappings, cache_klass: FakeCache, oai_request_klass: oai_request_klass)
+        transformation = Transformer.new(cdm_records: records, field_mappings: mappings, cache_klass: FakeCache, oai_request_klass: oai_request_klass)
 
-        err = _{ transformation.records }.must_raise RuntimeError
-        puts err.message.inspect
-        _(err.message).must_equal "Record Transformation Error (Record foo/5123): Mapping: {:dest_path=>\"has_children\", :origin_path=>\"has_children\", :formatters=>[CDMDEXER::BadFormatterWut]} Error:wuuuuut ConnectionError"
+        _, err = capture_io do
+          err = _{ transformation.records }.must_raise RuntimeError
+          _(err.message).must_equal "Record Transformation Error (Record foo/5123): Mapping: {:dest_path=>\"has_children\", :origin_path=>\"has_children\", :formatters=>[CDMDEXER::BadTransformerFormatter]} Error:mock ConnectionError"
+        end
       end
     end
   end
