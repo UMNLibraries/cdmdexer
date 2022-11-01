@@ -119,6 +119,21 @@ field_mappings:
       - CDMDEXER::StripFormatter
     origin_path: descri
 
+  - dest_path: sp_description_ts
+    formatters:
+      - CDMDEXER::StripFormatter
+    origin_path: spdesc
+
+  - dest_path: sp_description_tei
+    formatters:
+      - CDMDEXER::StripFormatter
+    origin_path: spdesc
+
+  - dest_path: sp_additional_notes_tei
+    formatters:
+      - CDMDEXER::StripFormatter
+    origin_path: spaddi
+
   - dest_path: dat_ssi
     formatters:
       - CDMDEXER::StripFormatter
@@ -199,6 +214,16 @@ field_mappings:
       - CDMDEXER::StripSemicolonFormatter
     origin_path: physic
 
+  - dest_path: sp_physical_format_ssi
+    formatters:
+      -CDMDEXER::StripFormatter
+    origin_path: spitem
+
+  - dest_path: sp_physical_format_tesi
+    formatters:
+      -CDMDEXER::StripFormatter
+    origin_path: spitem
+
   - dest_path: formal_subject_unstem_search
     formatters:
       - CDMDEXER::StripFormatter
@@ -238,6 +263,20 @@ field_mappings:
       - CDMDEXER::SplitFormatter
       - CDMDEXER::StripFormatter
     origin_path: subjec
+
+  - dest_path: sp_subject_teim
+    formatters:
+      - CDMDEXER::StripFormatter
+      - CDMDEXER::SplitFormatter
+      - CDMDEXER::StripFormatter
+    origin_path: sploca
+
+  - dest_path: sp_subject_ssim
+    formatters:
+      - CDMDEXER::StripFormatter
+      - CDMDEXER::SplitFormatter
+      - CDMDEXER::StripFormatter
+    origin_path: sploca
 
   - dest_path: keyword_unstem_search
     formatters:
@@ -314,6 +353,16 @@ field_mappings:
       - CDMDEXER::StripFormatter
     origin_path: countr
 
+  - dest_path: sp_country_ssi
+    formatters:
+      - CDMDEXER::StripFormatter
+    origin_path: spcoun
+
+  - dest_path: sp_continent_ssi
+    formatters:
+      - CDMDEXER::StripFormatter
+    origin_path: spcont
+
   - dest_path: country_unstem_search
     formatters:
       - CDMDEXER::StripFormatter
@@ -328,6 +377,11 @@ field_mappings:
     formatters:
       - CDMDEXER::StripFormatter
     origin_path: langua
+
+  - dest_path: sp_language_ssi
+    formatters:
+      - CDMDEXER::StripFormatter
+    origin_path: splang
 
   - dest_path: contributing_unstem_search
     formatters:
@@ -350,10 +404,25 @@ field_mappings:
       - CDMDEXER::StripFormatter
     origin_path: contac
 
-  - dest_path: rights_ssi
+  - dest_path: local_rights_tesi
+    formatters:
+      - CDMDEXER::StripFormatter
+    origin_path: local
+
+  - dest_path: rights_uri_ssi
     formatters:
       - CDMDEXER::StripFormatter
     origin_path: righta
+
+  - dest_path: sp_local_rights_tesi
+    formatters:
+      - CDMDEXER::StripFormatter
+    origin_path: splocb
+
+  - dest_path: sp_rights_uri_ssi
+    formatters:
+      - CDMDEXER::StripFormatter
+    origin_path: sprigh
 
   - dest_path: local_identifier_ssi
     formatters:
