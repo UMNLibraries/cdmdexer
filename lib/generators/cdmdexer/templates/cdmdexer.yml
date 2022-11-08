@@ -163,7 +163,7 @@ field_mappings:
 
   - dest_path: topic_ssim
     formatters:
-      - CDMDEXER::Titlieze
+      - CDMDEXER::Titleize
       - CDMDEXER::StripFormatter
       - CDMDEXER::SplitFormatter
       - CDMDEXER::StripFormatter
@@ -177,14 +177,14 @@ field_mappings:
 
   - dest_path: type_ssi
     formatters:
-      - CDMDEXER::Titlieze
+      - CDMDEXER::Titleize
       - CDMDEXER::StripSemicolonFormatter
       - CDMDEXER::StripFormatter
     origin_path: type
 
   - dest_path: type_tesi
     formatters:
-      - CDMDEXER::Titlieze
+      - CDMDEXER::Titleize
       - CDMDEXER::StripSemicolonFormatter
       - CDMDEXER::StripFormatter
     origin_path: type
@@ -206,7 +206,7 @@ field_mappings:
 
   - dest_path: formal_subject_ssim
     formatters:
-      - CDMDEXER::Titlieze
+      - CDMDEXER::Titleize
       - CDMDEXER::StripFormatter
       - CDMDEXER::SplitFormatter
       - CDMDEXER::StripFormatter
@@ -214,7 +214,7 @@ field_mappings:
 
   - dest_path: formal_subject_teim
     formatters:
-      - CDMDEXER::Titlieze
+      - CDMDEXER::Titleize
       - CDMDEXER::StripFormatter
       - CDMDEXER::SplitFormatter
       - CDMDEXER::StripFormatter
@@ -242,7 +242,7 @@ field_mappings:
   - dest_path: keyword_unstem_search
     formatters:
       - CDMDEXER::KeywordFormatter
-      - CDMDEXER::Titlieze
+      - CDMDEXER::Titleize
       - CDMDEXER::UniqueFormatter
       - CDMDEXER::StripFormatter
     origin_path: /
@@ -250,7 +250,7 @@ field_mappings:
   - dest_path: keyword_tesi
     formatters:
       - CDMDEXER::KeywordFormatter
-      - CDMDEXER::Titlieze
+      - CDMDEXER::Titleize
       - CDMDEXER::UniqueFormatter
       - CDMDEXER::JoinFormatter
       - CDMDEXER::StripFormatter
@@ -259,7 +259,7 @@ field_mappings:
   - dest_path: keyword_ssim
     formatters:
       - CDMDEXER::KeywordFormatter
-      - CDMDEXER::Titlieze
+      - CDMDEXER::Titleize
       - CDMDEXER::UniqueFormatter
       - CDMDEXER::StripFormatter
     origin_path: /
@@ -288,7 +288,7 @@ field_mappings:
 
   - dest_path: county_ssim
     formatters:
-      - CDMDEXER::Titlieze
+      - CDMDEXER::Titleize
       - CDMDEXER::StripFormatter
       - CDMDEXER::SplitFormatter
       - CDMDEXER::StripFormatter
@@ -341,7 +341,7 @@ field_mappings:
 
   - dest_path: contributing_organization_ssi
     formatters:
-      - CDMDEXER::Titlieze
+      - CDMDEXER::Titleize
       - CDMDEXER::StripFormatter
     origin_path: contra
 
@@ -510,7 +510,7 @@ field_mappings:
 
   - dest_path: geographic_feature_ssim
     formatters:
-      - CDMDEXER::Titlieze
+      - CDMDEXER::Titleize
       - CDMDEXER::StripFormatter
       - CDMDEXER::SplitFormatter
       - CDMDEXER::StripFormatter
