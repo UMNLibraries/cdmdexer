@@ -73,6 +73,8 @@ module CDMDEXER
     end
   end
 
+  class Titleize < Titlieze; end;
+
   class ImageId
     def self.format(value)
       value
