@@ -113,7 +113,7 @@ module CDMDEXER
                 }]
 
         field_mappings = [
-          {dest_path: 'keyword_ssim', origin_path: '/', formatters: [KeywordFormatter, Titlieze, UniqueFormatter, StripFormatter]}
+          {dest_path: 'keyword_ssim', origin_path: '/', formatters: [KeywordFormatter, Titleize, UniqueFormatter, StripFormatter]}
         ]
         oai_endpoint = 'example.com'
         oai_request_klass = Minitest::Mock.new
