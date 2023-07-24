@@ -31,7 +31,7 @@ module CDMDEXER
       # results in the long set of arguments that follows. Otherwise, we'd
       # simply inject the OAI request and extractor objects
       @config            = config
-      @solr_config       = config.fetch('solr_config').symbolize_keys
+      @solr_config       = config.fetch('solr_config')
       @cdm_endpoint      = config.fetch('cdm_endpoint')
       @oai_endpoint      = config.fetch('oai_endpoint')
       @field_mappings    = config.fetch('field_mappings', false)
