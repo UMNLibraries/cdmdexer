@@ -84,9 +84,9 @@ module CDMDEXER
     # Recurse through OAI batches one at a time
     def run_next_batch!
       if next_resumption_token && is_recursive
-        etl_worker_klass.perform_async(next_config)
+        etl_worker_klass.perform_async(next_config.to_json)
       else
-        completed_callback_klass.call!(config)
+        completed_callback_klass.call!(config.to_json)
       end
     end
 
@@ -107,7 +107,7 @@ module CDMDEXER
     def transform_and_load!
       updatables.each_slice(batch_size) do |records|
         transform_worker_klass.perform_async(records,
-                                            solr_config,
+                                            solr_config.to_json,
                                             cdm_endpoint,
                                             oai_endpoint,
                                             field_mappings,
