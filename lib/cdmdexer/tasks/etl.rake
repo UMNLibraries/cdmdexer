@@ -29,7 +29,7 @@ namespace :cdmdexer do
     :max_compounds
   ] do |t, args|
     CDMDEXER::ETLWorker.perform_async(
-      solr_config: { url: args.fetch(:solr_url) },
+      solr_config: { url: args.fetch(:solr_url) }.to_json,
       oai_endpoint: args.fetch(:oai_endpoint),
       cdm_endpoint: args.fetch(:cdm_endpoint),
       set_spec: args[:set_spec] != '""' ? args[:set_spec] : nil,

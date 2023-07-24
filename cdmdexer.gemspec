@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'contentdm_api', '~> 0.6.0'
   spec.add_dependency 'hash_at_path', '~> 0.1.6'
   spec.add_dependency 'rsolr', '~> 2.0'
-  spec.add_dependency 'sidekiq', '>= 3.5'
+  spec.add_dependency 'sidekiq', '>= 3.5', '< 7.0.0'
   spec.add_dependency 'titleize', '~> 1.4'
   # CDMDEXER expects to run in a rails app, but just to avoid adding
   # another external dependency for XML procssing, we rely on activesupport's
