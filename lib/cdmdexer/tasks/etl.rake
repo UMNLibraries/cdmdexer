@@ -9,7 +9,7 @@ namespace :cdmdexer do
     # config = etl.config
     # raise etl.config.keys.inspect
     CDMDEXER::ETLWorker.new.perform(
-      'solr_config' => {:url=>"http://solr:8983/solr/mdl-1"},
+      'solr_config' => {:url=>"http://solr:8983/solr/mdl-1"}.to_json,
       'oai_endpoint' => 'http://cdm16022.contentdm.oclc.org/oai/oai.php',
       'cdm_endpoint' => 'https://server16022.contentdm.oclc.org/dmwebservices/index.php',
       'set_spec' => 'mpls',
@@ -68,7 +68,7 @@ namespace :cdmdexer do
     puts "Indexing Sets: '#{set_specs.join(', ')}'"
 
     etl_config = {
-      solr_config: { url: args.fetch(:solr_url) },
+      solr_config: { url: args.fetch(:solr_url) }.to_json,
       oai_endpoint: args.fetch(:oai_endpoint),
       cdm_endpoint: args.fetch(:cdm_endpoint),
       batch_size: args.fetch(:batch_size, 5),
@@ -88,7 +88,7 @@ namespace :cdmdexer do
   ] do |t, args|
     CDMDEXER::TransformWorker.perform_async(
       [[args.fetch(:collection), args.fetch(:id)]],
-      { url: args.fetch(:solr_url) },
+      { url: args.fetch(:solr_url) }.to_json,
       args.fetch(:cdm_endpoint),
       args.fetch(:oai_endpoint)
     )
