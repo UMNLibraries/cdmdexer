@@ -2,6 +2,7 @@ require 'sidekiq'
 module CDMDEXER
   class TransformWorker
     include Sidekiq::Worker
+    Sidekiq.strict_args!
     attr_reader :records,
                 :solr_config,
                 :cdm_endpoint,
