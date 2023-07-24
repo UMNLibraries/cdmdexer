@@ -7,7 +7,7 @@ module CDMDEXER
     attr_reader :solr_config, :records, :deletables
     attr_writer :loader_klass, :solr_klass
     def perform(records = [], deletables = [], solr_config = {})
-      @solr_config = solr_config.symbolize_keys
+      @solr_config = solr_config
       @records     = records
       @deletables  = deletables
       load!
