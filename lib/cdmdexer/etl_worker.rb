@@ -84,9 +84,9 @@ module CDMDEXER
     # Recurse through OAI batches one at a time
     def run_next_batch!
       if next_resumption_token && is_recursive
-        etl_worker_klass.perform_async(next_config.to_json)
+        etl_worker_klass.perform_async(next_config)
       else
-        completed_callback_klass.call!(config.to_json)
+        completed_callback_klass.call!(config)
       end
     end
 
@@ -101,7 +101,7 @@ module CDMDEXER
     end
 
     def next_config
-      config.merge(resumption_token: next_resumption_token)
+      config.merge('resumption_token' => next_resumption_token)
     end
 
     def transform_and_load!

@@ -31,7 +31,7 @@ module CDMDEXER
     def records
       headers.map do |header|
         header.merge(
-          id: header['identifier'].split(':').last.split('/').join(':')
+          'id' => header['identifier'].split(':').last.split('/').join(':')
         )
       end
     end

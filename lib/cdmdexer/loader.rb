@@ -12,7 +12,7 @@ module CDMDEXER
     end
 
     def load!
-      solr_client.delete deletable_ids unless deletable_ids.empty?
+      solr_client.delete deletable_ids unless deletable_ids.compact.empty?
       solr_client.add records
     end
   end
