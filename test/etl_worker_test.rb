@@ -21,7 +21,7 @@ module CDMDEXER
     end
 
     it 'correctly uses its collaborators' do
-      etl_worker_klass.expect :perform_async, nil, [{"cdm_endpoint"=>"http://example.com", "oai_endpoint"=>"http://example.com1", "max_compounds"=>10, "is_recursive"=>true, "batch_size"=>1, "solr_config"=>{:blah=>"blah"}, :resumption_token=>"coll:21112niner123"}]
+      etl_worker_klass.expect :perform_async, nil, [{"cdm_endpoint"=>"http://example.com", "oai_endpoint"=>"http://example.com1", "max_compounds"=>10, "is_recursive"=>true, "batch_size"=>1, "solr_config"=>{:blah=>"blah"}, "resumption_token"=>"coll:21112niner123"}]
       oai_request_klass.expect :new,
                              oai_request_klass_object,
                              [

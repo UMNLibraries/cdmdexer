@@ -56,7 +56,7 @@ module CDMDEXER
       compound_records.each_slice(batch_size) do |compound_records_batch|
         transformer_worker_klass.perform_async(
           compound_records_batch,
-          solr_config.to_json,
+          solr_config,
           cdm_endpoint,
           oai_endpoint,
           field_mappings,
@@ -66,7 +66,7 @@ module CDMDEXER
     end
 
     def transform_and_load!
-      load_worker_klass.perform_async(transformed_records, [], solr_config.to_json)
+      load_worker_klass.perform_async(transformed_records, [], solr_config)
     end
 
     def compound_records

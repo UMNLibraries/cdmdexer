@@ -209,7 +209,7 @@ module CDMDEXER
         request = OaiRequest.new set_spec: 'swede',
                                  endpoint_url: 'http://example.com',
                                  client: client
-        _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", :id=>"foocollection1:123"}])
+        _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", "id" =>"foocollection1:123"}])
       end
     end
 
@@ -223,7 +223,7 @@ module CDMDEXER
         capture_io do
           request = OaiRequest.new endpoint_url: 'http://example.com',
                                   client: client
-          _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", :id=>"foocollection1:123"}])
+          _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", "id" =>"foocollection1:123"}])
           client.verify
         end
       end
@@ -240,7 +240,7 @@ module CDMDEXER
           request = OaiRequest.new endpoint_url: 'http://example.com',
                                   resumption_token: 'oai:123',
                                   client: client
-          _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", :id=>"foocollection1:123"}])
+          _(request.records).must_equal([{"identifier"=>"blerg.com:foocollection1/123", 'id'=>"foocollection1:123"}])
           client.verify
         end
       end
@@ -256,7 +256,7 @@ module CDMDEXER
         request = OaiRequest.new endpoint_url: 'http://example.com',
                                 client: client
         _(request.deletable_ids).must_equal(["foo:1234"])
-        _(request.updatables).must_equal([{"identifier"=>"blerg.com:foo/123", :id=>"foo:123"}, {"identifier"=>"blerg.com:foo/1235", :id=>"foo:1235"}])
+        _(request.updatables).must_equal([{"identifier"=>"blerg.com:foo/123", "id"=>"foo:123"}, {"identifier"=>"blerg.com:foo/1235", "id"=>"foo:1235"}])
       end
     end
 
@@ -272,7 +272,7 @@ module CDMDEXER
                                 after_date: 1.week.ago
 
         _(request.deletable_ids).must_equal(["foo:1239-today"])
-        _(request.updatables).must_equal([{"datestamp"=> today, "identifier"=>"blerg.com:foo/122235-today", :id=>"foo:122235-today"}])
+        _(request.updatables).must_equal([{"datestamp"=> today, "identifier"=>"blerg.com:foo/122235-today", "id"=>"foo:122235-today"}])
       end
     end
 
