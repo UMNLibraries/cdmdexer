@@ -54,7 +54,7 @@ module CDMDEXER
         if record['status'] == 'deleted'
           after_date ? Time.parse(record['datestamp']) >= after_date : true
         end
-      end.map { |record| record[:id] }
+      end.map { |record| record['id'] }
     end
 
     def updatables
