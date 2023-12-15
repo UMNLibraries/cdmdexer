@@ -70,17 +70,22 @@ module CDMDEXER
     end
 
     def compound_records
-      cmd_items.map(&:page).flatten
+      cdm_items.map(&:page).flatten
     end
 
-    def cmd_items
+    def cdm_items
       @cdm_items ||= records.map do |record|
         cdm_item_klass.new(record: record, cdm_endpoint: cdm_endpoint)
       end
     end
 
+    # Alias due to typo in method name
+    def cmd_items
+      cdm_items
+    end
+
     def transformed_records
-      transformer_klass.new(cdm_records: cmd_items.map(&:to_h),
+      transformer_klass.new(cdm_records: cdm_items.map(&:to_h),
                             oai_endpoint: oai_endpoint,
                             field_mappings: field_mappings).records
     end
