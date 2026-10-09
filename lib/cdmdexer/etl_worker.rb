@@ -5,12 +5,6 @@ module CDMDEXER
   class ETLWorker
     include Sidekiq::Worker
 
-    extend ::Forwardable
-    def_delegators :@oai_request,
-                   :deletable_ids,
-                   :updatables,
-                   :next_resumption_token
-
     attr_reader :config,
                 :solr_config,
                 :cdm_endpoint,
@@ -91,6 +85,18 @@ module CDMDEXER
     end
 
     private
+
+    def deletable_ids
+      @oai_request.deletable_ids
+    end
+
+    def updatables
+      @oai_request.updatables
+    end
+
+    def next_resumption_token
+      @oai_request.next_resumption_token
+    end
 
     # Extract an oai response, delete the deletables, transform and load the
     # updatable items

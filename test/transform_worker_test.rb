@@ -15,7 +15,7 @@ module CDMDEXER
       cdm_item_klass = Minitest::Mock.new
       cdm_item_obj = Minitest::Mock.new
       records.map do |record|
-        cdm_item_klass.expect :new, cdm_item_obj, [record: record, cdm_endpoint: 'example.com']
+        cdm_item_klass.expect :new, cdm_item_obj, [], record: record, cdm_endpoint: 'example.com'
         cdm_item_obj.expect :page, record['page'], []
         cdm_item_obj.expect :to_h, record, []
       end
@@ -27,11 +27,10 @@ module CDMDEXER
       transformed_records = [{ foo: 'bar'}]
       transformer_klass = Minitest::Mock.new
       transformer_obj = Minitest::Mock.new
-      transformer_klass.expect :new, transformer_obj, [
+      transformer_klass.expect :new, transformer_obj, [],
         cdm_records: records,
         oai_endpoint: oai_endpoint,
         field_mappings: field_mappings
-      ]
       transformer_obj.expect :records, transformed_records, []
 
       # Loader Mocks

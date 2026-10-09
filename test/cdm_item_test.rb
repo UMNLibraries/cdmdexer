@@ -6,22 +6,16 @@ module CDMDEXER
       endpoint = 'http://example.com'
       cdm_api_klass = Minitest::Mock.new
       cdm_api_obj = Minitest::Mock.new
-      cdm_api_klass.expect :new, cdm_api_obj, [
-        {
-          base_url: endpoint,
-          collection: 'fooCol',
-          with_compound: false,
-          id: '123'
-        }
-      ]
-      cdm_api_klass.expect :new, cdm_api_obj, [
-        {
-          base_url: endpoint,
-          collection: 'fooCol',
-          with_compound: false,
-          id: '0'
-        }
-      ]
+      cdm_api_klass.expect :new, cdm_api_obj, [],
+        base_url: endpoint,
+        collection: 'fooCol',
+        with_compound: false,
+        id: '123'
+      cdm_api_klass.expect :new, cdm_api_obj, [],
+        base_url: endpoint,
+        collection: 'fooCol',
+        with_compound: false,
+        id: '0'
       compound_record = { 'id' => 'fooCol:123', 'page' => [{ 'pageptr' => 0, 'blah' => 'blah' }, { 'pageptr' => 1, 'bar' => 'bar' }]}
       first_page_cmd_response = { 'id' => 'fooCol/0', 'blah' => 'blah'}
       cdm_api_obj.expect :metadata, compound_record, []
@@ -50,14 +44,11 @@ module CDMDEXER
         endpoint = 'http://example.com'
         cdm_api_klass = Minitest::Mock.new
         cdm_api_obj = Minitest::Mock.new
-        cdm_api_klass.expect :new, cdm_api_obj, [
-          {
-            base_url: endpoint,
-            collection: 'fooCol',
-            with_compound: false,
-            id: '123'
-          }
-        ]
+        cdm_api_klass.expect :new, cdm_api_obj, [],
+          base_url: endpoint,
+          collection: 'fooCol',
+          with_compound: false,
+          id: '123'
         cdm_api_obj.expect :metadata, {'page' => [], 'id' => 'fooCol/123'}, []
 
         capture_io do

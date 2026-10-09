@@ -9,7 +9,7 @@ module CDMDEXER
     let(:record) { { 'title' => '  The Stars My Destination  ' } }
 
     it 'calls the field formatter for each mapping' do
-      formatter.expect :new, formatter_object, [{:value=>'  The Stars My Destination  ', :formatters=>[CDMDEXER::DefaultFormatter]}]
+      formatter.expect :new, formatter_object, [], value: '  The Stars My Destination  ', formatters: [CDMDEXER::DefaultFormatter]
       formatter_object.expect :format!, 'The Stars My Destination'
       field_mapping.expect :origin_path, 'title', []
       field_mapping.expect :dest_path, 'title_ssi', []
@@ -35,7 +35,7 @@ module CDMDEXER
         record = {'title' => 'foo' }
         transformer = FieldTransformer.new(field_mapping: field_mapping, record: record)
         err = _{ transformer.reduce }.must_raise RuntimeError
-        _(err.message).must_equal "Mapping: {:dest_path=>\"title\", :origin_path=>\"title\", :formatters=>[CDMDEXER::BadFieldTransformerFormatter]} Error:mock error"
+        _(err.message).must_equal "Mapping: {dest_path: \"title\", origin_path: \"title\", formatters: [CDMDEXER::BadFieldTransformerFormatter]} Error:mock error"
       end
     end
   end

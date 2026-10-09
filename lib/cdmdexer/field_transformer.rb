@@ -2,8 +2,6 @@ require 'hash_at_path'
 
 module CDMDEXER
   class FieldTransformer
-    extend Forwardable
-    def_delegators :@field_mapping, :origin_path, :dest_path, :formatters
     attr_reader :field_value, :field_mapping, :formatter_klass
     def initialize(field_mapping: FieldMapping.new,
                    record: {},
@@ -22,6 +20,18 @@ module CDMDEXER
     end
 
     private
+
+    def origin_path
+      @field_mapping.origin_path
+    end
+
+    def dest_path
+      @field_mapping.dest_path
+    end
+
+    def formatters
+      @field_mapping.formatters
+    end
 
     def compact(record)
       (record.respond_to?(:compact)) ? record.compact : record

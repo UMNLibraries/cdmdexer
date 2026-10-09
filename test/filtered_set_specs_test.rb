@@ -15,10 +15,10 @@ module CDMDEXER
       oai_client = Minitest::Mock.new("OAIClient")
       oai_client_obj = Minitest::Mock.new("OAIClientOBJ")
       filter_set_callback = Minitest::Mock.new("FilterSetCallback")
-      oai_client.expect(:new, oai_client_obj, [{base_url: oai_base_url}])
+      oai_client.expect(:new, oai_client_obj, [], base_url: oai_base_url)
       oai_client_obj.expect(:request, oai_response, ['verb=ListSets'])
-      filter_set_callback.expect(:valid?, true, [{:set => sets.first}])
-      filter_set_callback.expect(:valid?, true, [{:set => sets.last}])
+      filter_set_callback.expect(:valid?, true, [], set: sets.first)
+      filter_set_callback.expect(:valid?, true, [], set: sets.last)
 
       filtered = FilteredSetSpecs.new(oai_base_url: oai_base_url,
                                        callback: filter_set_callback,

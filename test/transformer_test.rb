@@ -150,7 +150,7 @@ module CDMDEXER
 
         _, err = capture_io do
           err = _{ transformation.records }.must_raise RuntimeError
-          _(err.message).must_equal "Record Transformation Error (Record foo/5123): Mapping: {:dest_path=>\"has_children\", :origin_path=>\"has_children\", :formatters=>[CDMDEXER::BadTransformerFormatter]} Error:mock ConnectionError"
+          _(err.message).must_equal "Record Transformation Error (Record foo/5123): Mapping: {dest_path: \"has_children\", origin_path: \"has_children\", formatters: [CDMDEXER::BadTransformerFormatter]} Error:mock ConnectionError"
         end
       end
     end

@@ -15,11 +15,10 @@ module CDMDEXER
       solr_klass.expect :new, solr_client, [solr_config]
       loader_klass.expect :new,
                           loader_klass_object,
-                          [
-                            records: records,
-                            deletable_ids: deletables,
-                            solr_client: solr_client
-                          ]
+                          [],
+                          records: records,
+                          deletable_ids: deletables,
+                          solr_client: solr_client
       loader_klass_object.expect :load!, nil, []
       worker = LoadWorker.new
       worker.solr_klass = solr_klass
