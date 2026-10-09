@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   # another external dependency for XML procssing, we rely on activesupport's
   # Has.to_jsonl feature for testing and to allow this gem to function
   # independently from a rails app
-  spec.add_dependency 'rails', '~> 6.0'
+  spec.add_dependency 'rails', '>= 6.0'
   spec.add_dependency 'rexml', '~> 3.2'
 
   spec.add_development_dependency 'dotenv-rails', '~> 2.7.6'
